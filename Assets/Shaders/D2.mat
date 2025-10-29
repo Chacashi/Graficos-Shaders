@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: C3
-  m_Shader: {fileID: 4800000, guid: 2b51b67695ee7044fa56f320bd3da4b2, type: 3}
+  m_Name: D2
+  m_Shader: {fileID: 4800000, guid: 14450b22b4af0c342a86e81481525413, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,15 +23,17 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _DetailTex:
+        m_Texture: {fileID: 2800000, guid: 5ce95feff3e1105418d4f781a2750a3f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 12003c31fdad1234885e67324ac9f263, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 0.04
-    - _Power: 1.4
-    m_Colors:
-    - _VignetteColor: {r: 0.261042, g: 1, b: 0.066037595, a: 1}
+    - _DetailBlend: 0.93
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
