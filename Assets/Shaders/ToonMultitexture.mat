@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Toon
-  m_Shader: {fileID: 4800000, guid: 38d2220f5f32df0448f17658adc4100f, type: 3}
+  m_Name: ToonMultitexture
+  m_Shader: {fileID: 4800000, guid: 89aeacabaa190344f9ae8d54902cba6d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,25 +23,34 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
+    - _BaseTex:
         m_Texture: {fileID: 2800000, guid: c707e7e3e18e82e4fae61176bb7a42a3, type: 3}
-        m_Scale: {x: 2, y: 2}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RampTex:
-        m_Texture: {fileID: 2800000, guid: c707e7e3e18e82e4fae61176bb7a42a3, type: 3}
-        m_Scale: {x: 2, y: 2}
+    - _DetailTex:
+        m_Texture: {fileID: 2800000, guid: e9bb8437fcfb8274182b70aa2441f421, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 19b4d6112b4f69047b367d63a739e1b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 0.0273
-    - _RimIntensity: 1.38
-    - _RimPower: 3.9
-    - _ToonSteps: 2.9
-    - _UseRamp: 0
+    - _AmbientMultiplier: 0.25
+    - _RampSmoothness: 0.08
+    - _ShadingSteps: 4
+    - _Steps: 8
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _LightDir: {r: -1.7, g: 0.58, b: -2.5, a: 0}
-    - _OutlineColor: {r: 0.9169811, g: 0.3650622, b: 0.3650622, a: 1}
-    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightDir: {r: -8.83, g: 1.58, b: -2.4, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
