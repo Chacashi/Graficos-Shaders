@@ -50,7 +50,7 @@ Material:
     - _ShadingSteps: 4
     - _Steps: 8
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.3681881, g: 0.9433962, b: 0.32484868, a: 1}
     - _LightDir: {r: -8.83, g: 1.58, b: -2.4, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
