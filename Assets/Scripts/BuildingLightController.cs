@@ -3,51 +3,99 @@ using UnityEngine;
 
 public class BuildingLightController : MonoBehaviour
 {
-    [Header("Luz Direccional")]
-    public Light luzDireccional;
-    public AnimationCurve curvaIntensidad = AnimationCurve.EaseInOut(0, 0, 10, 1);
-    public float intensidadMaxima = 1f;
-    public float duracionCiclo = 10f;
+    [Header("Referencia al ciclo de día/noche")]
+    public DayNightCycle ciclo;
 
-    [Header("Objetos a controlar")]
+    [Header("Renderers del edificio")]
+    [Tooltip("Arrastra aquí los objetos (paredes, ventanas, etc.) que tengan materiales con emisión.")]
     public List<Renderer> renderObjects = new List<Renderer>();
 
+    [Header("Configuración de emisión")]
+    [Tooltip("Intensidad de emisión durante la noche (brillo).")]
+    public float intensidadNoche = 1.5f;
+
+    [Tooltip("Intensidad de emisión durante el día (apagado = 0).")]
+    public float intensidadDia = 0f;
+
     private List<Material> materiales = new List<Material>();
-    private float tiempoActual = 0f;
+    private bool lucesEncendidas = false;
 
     void Start()
     {
-        // Clonamos materiales para no modificarlos globalmente
-        foreach (var obj in renderObjects)
+        if (ciclo == null)
         {
-            if (obj != null)
+            Debug.LogWarning($"{name}: No se asignó un DayNightCycle. No podrá actualizar el estado de las luces.");
+        }
+
+        materiales.Clear();
+        foreach (var rend in renderObjects)
+        {
+            if (rend == null) continue;
+
+            // Clonar materiales individuales
+            Material[] mats = rend.materials;
+            for (int i = 0; i < mats.Length; i++)
             {
-                Material mat = new Material(obj.sharedMaterial);
-                obj.material = mat;
-                materiales.Add(mat);
+                mats[i] = new Material(mats[i]); // evita modificar globalmente
             }
+            rend.materials = mats;
+            materiales.AddRange(mats);
         }
     }
 
     void Update()
     {
-        // Control del tiempo
-        tiempoActual += Time.deltaTime;
-        if (tiempoActual > duracionCiclo)
-            tiempoActual = 0;
+        if (ciclo == null) return;
 
-        // Evaluar intensidad segun la curva
-        float intensidad = curvaIntensidad.Evaluate(tiempoActual / duracionCiclo) * intensidadMaxima;
+        bool esDeDia = ciclo.EsDeDia;
 
-        // Cambiar la luz direccional
-        if (luzDireccional != null)
-            luzDireccional.intensity = intensidad;
+        if (esDeDia && lucesEncendidas)
+        {
+            ApagarEmision();
+            lucesEncendidas = false;
+        }
+        else if (!esDeDia && !lucesEncendidas)
+        {
+            EncenderEmision();
+            lucesEncendidas = true;
+        }
+    }
 
-        // Aplicar intensidad a los materiales
+    private void EncenderEmision()
+    {
         foreach (var mat in materiales)
         {
-            if (mat != null)
-                mat.SetFloat("_Intensity", Mathf.Clamp01(1 - intensidad));
+            if (mat == null) continue;
+
+            // Para tu shader FullMapsURP
+            if (mat.HasProperty("_EmissionStrength"))
+            {
+                mat.SetFloat("_EmissionStrength", intensidadNoche);
+            }
+
+            // Si también usas una propiedad de color opcional:
+            if (mat.HasProperty("_EmissionColor"))
+            {
+                mat.SetColor("_EmissionColor", new Color(1f, 0.75f, 0.4f)); // cálido
+            }
+        }
+    }
+
+    private void ApagarEmision()
+    {
+        foreach (var mat in materiales)
+        {
+            if (mat == null) continue;
+
+            if (mat.HasProperty("_EmissionStrength"))
+            {
+                mat.SetFloat("_EmissionStrength", intensidadDia);
+            }
+
+            if (mat.HasProperty("_EmissionColor"))
+            {
+                mat.SetColor("_EmissionColor", Color.black);
+            }
         }
     }
 }

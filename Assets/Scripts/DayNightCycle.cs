@@ -4,136 +4,87 @@ public class DayNightCycle : MonoBehaviour
 {
     [Header("Configuración del Ciclo")]
     [Tooltip("Duración de un día completo en segundos")]
-    [SerializeField] private float duracionDia = 120f; // 2 minutos por defecto
+    [SerializeField] private float duracionDia = 60f;
 
     [Tooltip("Hora inicial del día (0-24)")]
-    [SerializeField] private float horaInicial = 12f;
+    [SerializeField] private float horaInicial = 6f;
 
-    [Header("Rotación")]
-    [Tooltip("Velocidad de rotación del sol")]
-    private float velocidadRotacion;
+    [Header("Referencia de luz (Sol)")]
+    public Light luzDireccional;
 
-    [Header("Colores del Día")]
+    [Header("Color e intensidad del Sol")]
     [SerializeField] private Gradient colorLuz;
-    [SerializeField] private bool usarGradienteColor = true;
-
-    [Header("Intensidad")]
     [SerializeField] private AnimationCurve curvaIntensidad;
     [SerializeField] private float intensidadMaxima = 1f;
 
-    // Variables privadas
-    public Light luzDireccional;
-    private float tiempoActual;
+    // Valor público entre 0 y 1 (0 = amanecer, 0.5 = atardecer, 1 = medianoche)
+    [Range(0f, 1f)] public float timeOfDay;
+
+    // --- Propiedad para saber si es día ---
+    public bool EsDeDia => timeOfDay >= 0.25f && timeOfDay <= 0.75f;
 
     void Start()
     {
-        // Obtener el componente Light
-
         if (luzDireccional == null)
         {
-            Debug.LogError("No se encontró un componente Light en este GameObject!");
+            Debug.LogError("Asigna una luz direccional (el sol) en el inspector.");
             enabled = false;
             return;
         }
 
-        // Calcular velocidad de rotación (360 grados / duración en segundos)
-        velocidadRotacion = 360f / duracionDia;
+        // Configurar hora inicial (0-1)
+        timeOfDay = horaInicial / 24f;
 
-        // Configurar tiempo inicial
-        tiempoActual = horaInicial / 24f;
+        // Gradiente por defecto si no hay
+        if (colorLuz == null || colorLuz.colorKeys.Length == 0)
+        {
+            colorLuz = new Gradient();
+            colorLuz.SetKeys(
+                new GradientColorKey[]
+                {
+                    new GradientColorKey(new Color(0.2f, 0.2f, 0.3f), 0f),
+                    new GradientColorKey(new Color(1f, 0.6f, 0.3f), 0.25f),
+                    new GradientColorKey(new Color(1f, 0.95f, 0.8f), 0.5f),
+                    new GradientColorKey(new Color(1f, 0.5f, 0.2f), 0.75f),
+                    new GradientColorKey(new Color(0.2f, 0.2f, 0.3f), 1f)
+                },
+                new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(1f, 1f)
+                }
+            );
+        }
 
-        // Inicializar gradiente y curva si no están configurados
-        InicializarGradienteDefault();
-        InicializarCurvaDefault();
-
-        // Aplicar rotación inicial
-        ActualizarRotacion();
+        if (curvaIntensidad == null || curvaIntensidad.length == 0)
+        {
+            curvaIntensidad = new AnimationCurve(
+                new Keyframe(0f, 0f),
+                new Keyframe(0.25f, 0.8f),
+                new Keyframe(0.5f, 1f),
+                new Keyframe(0.75f, 0.8f),
+                new Keyframe(1f, 0f)
+            );
+        }
     }
 
     void Update()
     {
-        // Actualizar el tiempo (0 a 1 representa un día completo)
-        tiempoActual += (Time.deltaTime / duracionDia);
+        // Avanza el tiempo
+        timeOfDay += Time.deltaTime / duracionDia;
+        if (timeOfDay > 1f)
+            timeOfDay -= 1f;
 
-        // Reiniciar el ciclo cuando se complete
-        if (tiempoActual >= 1f)
-        {
-            tiempoActual = 0f;
-        }
-
-        // Actualizar la rotación de la luz
-        ActualizarRotacion();
-
-        // Actualizar color si está habilitado
-        if (usarGradienteColor && colorLuz != null)
-        {
-            luzDireccional.color = colorLuz.Evaluate(tiempoActual);
-        }
-
-        // Actualizar intensidad
-        if (curvaIntensidad != null)
-        {
-            luzDireccional.intensity = curvaIntensidad.Evaluate(tiempoActual) * intensidadMaxima;
-        }
+        // Actualiza luz
+        ActualizarSol();
     }
 
-    private void ActualizarRotacion()
+    private void ActualizarSol()
     {
-        // Calcular la rotación (el sol sale por el este y se pone por el oeste)
-        float angulo = tiempoActual * 360f;
+        float angulo = timeOfDay * 360f;
         transform.rotation = Quaternion.Euler(new Vector3((angulo - 90f), 170f, 0));
-    }
 
-    private void InicializarGradienteDefault()
-    {
-        if (colorLuz == null || colorLuz.colorKeys.Length == 0)
-        {
-            colorLuz = new Gradient();
-
-            // Crear un gradiente con colores del día
-            GradientColorKey[] colorKeys = new GradientColorKey[5];
-            colorKeys[0] = new GradientColorKey(new Color(0.2f, 0.2f, 0.3f), 0f);      // Medianoche - Azul oscuro
-            colorKeys[1] = new GradientColorKey(new Color(1f, 0.6f, 0.3f), 0.23f);      // Amanecer - Naranja
-            colorKeys[2] = new GradientColorKey(new Color(1f, 0.95f, 0.8f), 0.5f);      // Mediodía - Blanco cálido
-            colorKeys[3] = new GradientColorKey(new Color(1f, 0.5f, 0.2f), 0.73f);      // Atardecer - Naranja rojizo
-            colorKeys[4] = new GradientColorKey(new Color(0.2f, 0.2f, 0.3f), 1f);       // Medianoche - Azul oscuro
-
-            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-            alphaKeys[0] = new GradientAlphaKey(1f, 0f);
-            alphaKeys[1] = new GradientAlphaKey(1f, 1f);
-
-            colorLuz.SetKeys(colorKeys, alphaKeys);
-        }
-    }
-
-    private void InicializarCurvaDefault()
-    {
-        if (curvaIntensidad == null || curvaIntensidad.keys.Length == 0)
-        {
-            curvaIntensidad = new AnimationCurve();
-            curvaIntensidad.AddKey(0f, 0f);      // Medianoche - Sin luz
-            curvaIntensidad.AddKey(0.23f, 0.5f);  // Amanecer - Media luz
-            curvaIntensidad.AddKey(0.5f, 1f);     // Mediodía - Luz máxima
-            curvaIntensidad.AddKey(0.73f, 0.5f);  // Atardecer - Media luz
-            curvaIntensidad.AddKey(1f, 0f);       // Medianoche - Sin luz
-        }
-    }
-
-    // Métodos públicos para control externo
-    public void EstablecerHora(float hora)
-    {
-        tiempoActual = Mathf.Clamp(hora / 24f, 0f, 1f);
-        ActualizarRotacion();
-    }
-
-    public float ObtenerHoraActual()
-    {
-        return tiempoActual * 24f;
-    }
-
-    public void CambiarVelocidad(float nuevaDuracion)
-    {
-        duracionDia = Mathf.Max(1f, nuevaDuracion);
-        velocidadRotacion = 360f / duracionDia;
+        luzDireccional.color = colorLuz.Evaluate(timeOfDay);
+        luzDireccional.intensity = curvaIntensidad.Evaluate(timeOfDay) * intensidadMaxima;
     }
 }
