@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M3
+  m_Name: M14
   m_Shader: {fileID: -6465566751694194690, guid: ed2c19075910c644c90e64999a9205d8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -75,7 +75,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTexture2D:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 3, y: 0.5}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -127,7 +127,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
-    - _Glossines: 0
+    - _Glossines: 32
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
@@ -144,16 +144,16 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _ValueEmmisive: 1
+    - _ValueEmmisive: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _AmbientColor: {r: 28.47, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0.41509432, g: 0.16251333, b: 0.16251333, a: 1}
+    - _AmbientColor: {r: 2, g: 2, b: 2, a: 0}
+    - _BaseColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EmmisiveColor: {r: 112.71033, g: 1024, b: 0, a: 0}
-    - _MainColor: {r: 1, g: 0, b: 0, a: 0}
+    - _EmmisiveColor: {r: 205.5115, g: 0, b: 14.436701, a: 1}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 0}
     - _RimColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}

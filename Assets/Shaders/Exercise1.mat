@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2668105653153965777
+--- !u!114 &-2694226691592166032
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: A3
-  m_Shader: {fileID: -6465566751694194690, guid: ed2c19075910c644c90e64999a9205d8, type: 3}
+  m_Name: Exercise1
+  m_Shader: {fileID: -6465566751694194690, guid: af706c6c997fdc54ea3ada9bd901eac2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -37,24 +37,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AmbientOclussion:
-        m_Texture: {fileID: 2800000, guid: fe65f5636f64058428cf963423875d59, type: 3}
+    - _TexturaBase:
+        m_Texture: {fileID: 2800000, guid: 73ebfcad2f2011b43a425d0a64d8b51f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _HeightMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexture2D:
-        m_Texture: {fileID: 2800000, guid: 13c58c888a3e28d45951e95fb4039bac, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Metallic:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 0f6b6a84905302243bb9056c1ba43644, type: 3}
+    - _TexturaEmisiv:
+        m_Texture: {fileID: 2800000, guid: 528d0813093122d45b3892fb1467f0cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -71,17 +59,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Glossines: 32
+    - _EscalaNoise: 20
+    - _Power: 2
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RimAmount: 0
-    - _RimTreshold: 0
-    - _ValueEmmisive: 1
+    - _Speed: 0.5
     m_Colors:
-    - _AmbientColor: {r: 3.76, g: 0, b: 0, a: 0}
-    - _EmmisiveColor: {r: 0.0009397111, g: 0.000013297775, b: 0.000013297775, a: 0}
-    - _MainColor: {r: 15.1, g: 5.98, b: 0, a: 0}
-    - _RimColor: {r: 0.51, g: 0, b: 0, a: 0}
-    - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorEmisivo: {r: 58.03815, g: 0, b: 2.226793, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
