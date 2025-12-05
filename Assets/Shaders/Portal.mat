@@ -47,7 +47,7 @@ Material:
     - _SpeedX: 0.2
     - _SpeedY: 0.2
     m_Colors:
-    - _BaseColor: {r: 13.76636, g: 0, b: 0.5681215, a: 0}
+    - _BaseColor: {r: 3.3527794, g: 0.64088935, b: 3.9487064, a: 0}
     - _Vector2OffSet1: {r: 1, g: 1, b: 0, a: 0}
     - _VectorOffSet2: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
